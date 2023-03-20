@@ -4,6 +4,7 @@ export enum ChannelTypeEnum {
   SMS = 'sms',
   CHAT = 'chat',
   PUSH = 'push',
+  WEBHOOK = 'webhook',
 }
 
 export enum StepTypeEnum {
@@ -15,6 +16,7 @@ export enum StepTypeEnum {
   DIGEST = 'digest',
   TRIGGER = 'trigger',
   DELAY = 'delay',
+  WEBHOOK = 'webhook',
 }
 
 export const STEP_TYPE_TO_CHANNEL_TYPE = new Map<StepTypeEnum, ChannelTypeEnum>([
@@ -23,6 +25,7 @@ export const STEP_TYPE_TO_CHANNEL_TYPE = new Map<StepTypeEnum, ChannelTypeEnum>(
   [StepTypeEnum.SMS, ChannelTypeEnum.SMS],
   [StepTypeEnum.CHAT, ChannelTypeEnum.CHAT],
   [StepTypeEnum.PUSH, ChannelTypeEnum.PUSH],
+  [StepTypeEnum.WEBHOOK, ChannelTypeEnum.WEBHOOK],
 ]);
 
 export enum ChannelCTATypeEnum {

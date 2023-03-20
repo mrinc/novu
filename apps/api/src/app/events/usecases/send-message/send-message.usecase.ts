@@ -19,6 +19,7 @@ import {
 import { SendMessageCommand } from './send-message.command';
 import { SendMessageEmail } from './send-message-email.usecase';
 import { SendMessageSms } from './send-message-sms.usecase';
+import { SendMessageWebhook } from './send-message-webhook.usecase';
 import { SendMessageInApp } from './send-message-in-app.usecase';
 import { SendMessageChat } from './send-message-chat.usecase';
 import { SendMessagePush } from './send-message-push.usecase';
@@ -47,6 +48,7 @@ export class SendMessage {
     private sendMessageInApp: SendMessageInApp,
     private sendMessageChat: SendMessageChat,
     private sendMessagePush: SendMessagePush,
+    private sendMessageWebhook: SendMessageWebhook,
     private digest: Digest,
     private subscriberRepository: SubscriberRepository,
     private createExecutionDetails: CreateExecutionDetails,
@@ -119,6 +121,8 @@ export class SendMessage {
         return await this.sendMessageChat.execute(command);
       case StepTypeEnum.PUSH:
         return await this.sendMessagePush.execute(command);
+      case StepTypeEnum.WEBHOOK:
+        return await this.sendMessageWebhook.execute(command);
       case StepTypeEnum.DIGEST:
         return await this.digest.execute(command);
       case StepTypeEnum.DELAY:

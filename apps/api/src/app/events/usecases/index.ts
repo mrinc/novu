@@ -2,6 +2,7 @@ import { ProcessSubscriber } from './process-subscriber/process-subscriber.useca
 import { TriggerEvent } from './trigger-event';
 import { SendMessage } from './send-message/send-message.usecase';
 import { SendMessageSms } from './send-message/send-message-sms.usecase';
+import { SendMessageWebhook } from './send-message/send-message-webhook.usecase';
 import { SendMessageEmail } from './send-message/send-message-email.usecase';
 import { SendMessageInApp } from './send-message/send-message-in-app.usecase';
 import { SendMessageChat } from './send-message/send-message-chat.usecase';
@@ -38,6 +39,7 @@ export const USE_CASES = [
   SendMessageInApp,
   SendMessageChat,
   SendMessagePush,
+  SendMessageWebhook,
   QueueNextJob,
   CreateNotificationJobs,
   Digest,

@@ -22,6 +22,19 @@ export interface IEmailOptions {
   bcc?: string[];
 }
 
+export interface IWebhookOptions {
+  url: string;
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+  dataType: 'body-json' | 'body-form' | null;
+  username?: string;
+  password?: string;
+  headers?: { [key: string]: string };
+  expectedResponseCode: number;
+  responseIdPath?: string;
+  content?: string;
+  payload: object;
+  id?: string;
+}
 export interface ISmsOptions {
   to: string;
   content: string;
@@ -72,6 +85,11 @@ export interface ISendMessageSuccessResponse {
   date?: string;
 }
 
+export enum WebhookEventStatusEnum {
+  DELIVERED = 'delivered',
+  FAILED = 'failed',
+}
+
 export enum EmailEventStatusEnum {
   OPENED = 'opened',
   REJECTED = 'rejected',
@@ -99,7 +117,7 @@ export enum SmsEventStatusEnum {
 }
 
 export interface IEventBody {
-  status: EmailEventStatusEnum | SmsEventStatusEnum;
+  status: EmailEventStatusEnum | SmsEventStatusEnum | WebhookEventStatusEnum;
   date: string;
   externalId?: string;
   attempts?: number;
@@ -108,12 +126,33 @@ export interface IEventBody {
   row?: string;
 }
 
+export interface IWebhookEventBody extends IEventBody {
+  status: WebhookEventStatusEnum;
+}
+
 export interface IEmailEventBody extends IEventBody {
   status: EmailEventStatusEnum;
 }
 
 export interface ISMSEventBody extends IEventBody {
   status: SmsEventStatusEnum;
+}
+
+export interface IWebhookProvider extends IProvider {
+  channelType: ChannelTypeEnum.WEBHOOK;
+
+  sendMessage(options: IWebhookOptions): Promise<ISendMessageSuccessResponse>;
+
+  getMessageId?: (body: any | any[]) => string[];
+
+  parseEventBody?: (
+    body: any | any[],
+    identifier: string
+  ) => IWebhookEventBody | undefined;
+
+  checkIntegration(
+    options: IWebhookOptions
+  ): Promise<ICheckIntegrationResponse>;
 }
 
 export interface IEmailProvider extends IProvider {
